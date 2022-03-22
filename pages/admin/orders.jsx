@@ -5,15 +5,6 @@ import ContainerBlock from '../../layout/ContainerBlock'
 import OrderDataService from '../../services/orders.services'
 import ShippingDataService from '../../services/shipping.services'
 
-export async function getStaticProps() {
-  const email = 'admin@test.com'
-  return {
-    props: {
-      email,
-    },
-  }
-}
-
 export default function OrdersPage({ email }) {
   const [orders, setOrders] = useState([])
   const [shipped, setShipping] = useState([])
@@ -213,4 +204,13 @@ export default function OrdersPage({ email }) {
       </ContainerBlock>
     </AdminOnlyRoute>
   )
+}
+
+export async function getStaticProps() {
+  const email = 'admin@test.com'
+  return {
+    props: {
+      email,
+    },
+  }
 }
