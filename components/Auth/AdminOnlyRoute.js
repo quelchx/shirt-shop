@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import { useUserAuth } from '../../context/UserAuthContext'
 
-const AdminOnlyRoute = ({ children }) => {
+const AdminOnlyRoute = ({ children, email }) => {
   const [authorized, setAuthorized] = useState(false)
   const [loading, setLoading] = useState(true)
 
@@ -11,7 +11,7 @@ const AdminOnlyRoute = ({ children }) => {
   const { user } = useUserAuth()
 
   useEffect(() => {
-    if (user && user.email === 'admin@test.com') {
+    if (user && user.email === email) {
       setAuthorized(true)
       setLoading(false)
     }
