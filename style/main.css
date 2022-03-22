@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* manual background colors for t-shirts because some tailwindcss classes won't compile */
+._orange_ {
+  /* bg-orange-600 */
+  background-color: rgb(234 88 12);
+}
+
+._red_ {
+  /* bg-red-700 */
+  background-color: rgb(185 28 28);
+}
+
+._yellow_ {
+  /* bg-amber-500 */
+  background-color: rgb(245 158 11);
+}
+
+._blue_ {
+  /* bg-cyan-700 */
+  background-color: rgb(14 116 144);
+}
+
+/* example */
+@layer base {
+  input,
+  textarea {
+    @apply block w-full;
+  }
+}
+
+@layer components {
+  .link {
+    @apply border-b-2 border-gray-300 hover:border-cyan-500 hover:shadow-lg hover:bg-cyan-600 hover:text-white;
+  }
+
+  ._input_ {
+    @apply mt-1 focus:ring-green-500 focus:border-green-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md;
+  }
+
+  ._dropdown_ {
+    @apply origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none;
+  }
+
+  ._contact-input_ {
+    @apply block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-green-600 focus:ring focus:ring-green-200 focus:ring-opacity-50;
+  }
+
+  .size_ {
+    @apply relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 sm:py-6 bg-white shadow-sm text-gray-900 cursor-pointer
+  }
+
+  ._active_ {
+    @apply ring-2 ring-green-500;
+  }
+}

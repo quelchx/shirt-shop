@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.form {
+  display: flex;
+  text-align: center;
+  font-size: larger;
+  align-items: center;
+}
+
+.heading {
+  text-align: center;
+  position: relative;
+  font-size: 20px;
+  padding: 20px;
+}
+
+.label {
+  display: block;
+  padding: 5px;
+}
+
+.input {
+  font-size: larger;
+  padding: 5px;
+  padding-right: 5%;
+  margin: 2px;
+  margin-left: 1%;
+  margin-right: 1%;
+  background-color: orange;
+}
+
+.btn {
+  background-color: green;
+  border-radius: 5px;
+  font-size: larger;
+  display: block;
+  padding: 5px;
+  margin: 10px auto;
+  color: 'bg-green-600';
+}
+
+.messages {
+  display: flex;
+  justify-content: center;
+}
+
+.error {
+  display: block;
+  background-color: red;
+  color: white;
+  width: fit-content;
+  height: 50px;
+  padding: 5px;
+}
+
+.success {
+  display: block;
+  background-color: lightgray;
+  color: green;
+  width: fit-content;
+  height: 50px;
+  padding: 5px;
+}
