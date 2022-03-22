@@ -13,9 +13,9 @@ export default function PortalPage({ email }) {
   }
 
   return (
-    <AdminOnlyRoute email={email}>
+    <AdminOnlyRoute >
       <ContainerBlock
-        title={'Admin Panel - ' + email}
+        title={'Admin Panel - ' }
         description="T-Shirt Shop Admin Panel"
       >
         <div className="p-2">
@@ -36,11 +36,4 @@ export default function PortalPage({ email }) {
   )
 }
 
-export async function getStaticProps() {
-  const email = 'admin@test.com'
-  return {
-    props: {
-      email,
-    },
-  }
-}
+

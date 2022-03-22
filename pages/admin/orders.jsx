@@ -43,7 +43,7 @@ export default function OrdersPage({ email }) {
   }
 
   return (
-    <AdminOnlyRoute email={email}>
+    <AdminOnlyRoute >
       <ContainerBlock title={`Admin Panel - ${email}`}>
         <div className="px-16 py-16 rounded-lg shadow">
           <h2 className="font-bold text-2xl pb-2">Current Orders</h2>
@@ -204,13 +204,4 @@ export default function OrdersPage({ email }) {
       </ContainerBlock>
     </AdminOnlyRoute>
   )
-}
-
-export async function getStaticProps() {
-  const email = 'admin@test.com'
-  return {
-    props: {
-      email,
-    },
-  }
 }
