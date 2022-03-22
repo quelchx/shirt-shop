@@ -37,7 +37,7 @@ export default function PortalPage({ email }) {
 }
 
 export async function getStaticProps() {
-  const email = process.env.ADMIN_EMAIL
+  const email = 'admin@test.com'
   return {
     props: {
       email,

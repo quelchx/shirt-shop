@@ -6,7 +6,7 @@ import OrderDataService from '../../services/orders.services'
 import ShippingDataService from '../../services/shipping.services'
 
 export async function getStaticProps() {
-  const email = process.env.ADMIN_EMAIL
+  const email = 'admin@test.com'
   return {
     props: {
       email,
