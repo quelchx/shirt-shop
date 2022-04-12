@@ -5,6 +5,15 @@ import ContainerBlock from '../../layout/ContainerBlock'
 import OrderDataService from '../../services/orders.services'
 import ShippingDataService from '../../services/shipping.services'
 
+export async function getStaticProps() {
+  const email = process.env.ADMIN_EMAIL
+  return {
+    props: {
+      email,
+    },
+  }
+}
+
 export default function OrdersPage({ email }) {
   const [orders, setOrders] = useState([])
   const [shipped, setShipping] = useState([])
@@ -46,9 +55,9 @@ export default function OrdersPage({ email }) {
     <AdminOnlyRoute email={email}>
       <ContainerBlock title={`Admin Panel - ${email}`}>
         <div className="px-16 py-16 rounded-lg shadow">
-          <h2 className="font-bold text-2xl pb-2">Current Orders</h2>
+          <h2 className="pb-2 text-2xl font-bold">Current Orders</h2>
           {orders.length > 0 ? (
-            <ul className="divide-y-2 shadow-lg divide-gray-100">
+            <ul className="divide-y-2 divide-gray-100 shadow-lg">
               {orders.map((doc) => {
                 return (
                   <li key={doc.id} className="p-3 border-2">
@@ -64,7 +73,7 @@ export default function OrdersPage({ email }) {
                       <strong>Address: </strong>
                       {doc.address}, {doc.city} {doc.postal}
                     </div>
-                    {doc.items.map((el) => {
+                    {doc.items?.map((el) => {
                       return (
                         <div key={el.product.id}>
                           <div>
@@ -89,24 +98,24 @@ export default function OrdersPage({ email }) {
                       )
                     })}
                     <p>Notes: {doc.notes}</p>
-                    <div className="mt-2 flex gap-2">
+                    <div className="flex gap-2 mt-2">
                       <button
                         onClick={(e) => {
                           deleteHandler(doc.id, doc)
                         }}
-                        className="px-2 py-1 bg-red-600 text-white"
+                        className="px-2 py-1 text-white bg-red-600"
                       >
                         Delete Order
                       </button>
                       <button
                         onClick={(e) => shipOrderHandler(doc, doc.id)}
-                        className="px-2 py-1 bg-blue-600 text-white"
+                        className="px-2 py-1 text-white bg-blue-600"
                       >
                         Ship Order
                       </button>
                       <a
                         href={`mailto:${doc.email}`}
-                        className="px-2 py-1 bg-green-600 text-white"
+                        className="px-2 py-1 text-white bg-green-600"
                       >
                         Contact Buyer
                       </a>
@@ -121,10 +130,10 @@ export default function OrdersPage({ email }) {
           <br />
           <hr />
           <div className="pt-10">
-            <h2 className="font-bold text-2xl pb-2">Shipped Orders</h2>
+            <h2 className="pb-2 text-2xl font-bold">Shipped Orders</h2>
             {shipped.length > 0 ? (
               <>
-                <ul className="divide-y-2 shadow-lg divide-gray-100">
+                <ul className="divide-y-2 divide-gray-100 shadow-lg">
                   {shipped.map((doc) => {
                     return (
                       <li key={doc.id} className="p-3 border-2">
@@ -172,19 +181,19 @@ export default function OrdersPage({ email }) {
                             </div>
                           )
                         })}
-                        <div className="mt-2 flex gap-2">
+                        <div className="flex gap-2 mt-2">
                           <button
                             onClick={(e) => {
                               shippedDeleteHandler(doc.id)
                             }}
-                            className="px-2 py-1 bg-red-600 text-white"
+                            className="px-2 py-1 text-white bg-red-600"
                           >
                             Delete Order
                           </button>
 
                           <a
                             href={`mailto:${doc.email}`}
-                            className="px-2 py-1 bg-green-600 text-white"
+                            className="px-2 py-1 text-white bg-green-600"
                           >
                             Contact Buyer
                           </a>
@@ -204,13 +213,4 @@ export default function OrdersPage({ email }) {
       </ContainerBlock>
     </AdminOnlyRoute>
   )
-}
-
-export async function getStaticProps() {
-  const email = process.env.ADMIN_EMAIL
-  return {
-    props: {
-      email,
-    },
-  }
 }

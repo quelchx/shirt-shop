@@ -1,5 +1,5 @@
 // will have to manage login state if we choose to have auth system -- meaning sign-in if no user isLoggedIn deteIsctegedIns = useState(false)ign-out if user isLoggedIn currIsentgedIn  = useState(false)active (buttons)
-import React from 'react'
+import React, { useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import routes from '../../routes'
@@ -12,6 +12,35 @@ export default function Navbar() {
   const { user, logOut } = useUserAuth()
   const router = useRouter()
   const { cartItems } = useCartContext()
+
+  const renderAvatar = () => {
+    if (user) {
+      if (user.photoURL === null) {
+        return (
+          <img
+            className="w-8 h-8 rounded-full"
+            src="https://www.pngkey.com/png/detail/115-1150152_default-profile-picture-avatar-png-green.png"
+            alt="avatar"
+          />
+        )
+      }
+      return (
+        <img
+          className="w-8 h-8 rounded-full"
+          src={user.photoURL}
+          alt="avatar"
+        />
+      )
+    } else {
+      return (
+        <img
+          className="w-8 h-8 rounded-full"
+          src="https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y"
+          alt="avatar"
+        />
+      )
+    }
+  }
 
   const handleLogout = async () => {
     // clearing local storage to ensure if another user logs in the previous storage doesn't load in -- this is the only option for now
@@ -27,12 +56,12 @@ export default function Navbar() {
 
   return (
     <nav className="bg-green-600">
-      <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+      <div className="px-2 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div className="relative flex items-center justify-between h-16">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
             <button
               type="button"
-              className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+              className="inline-flex items-center justify-center p-2 text-gray-400 rounded-md hover:text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
               aria-controls="mobile-menu"
               aria-expanded="false"
             >
@@ -40,7 +69,7 @@ export default function Navbar() {
 
               <svg
                 onClick={() => toggleMenu('mobile-menu', 'sm:hidden', 'hidden')}
-                className="block h-6 w-6"
+                className="block w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -56,7 +85,7 @@ export default function Navbar() {
               </svg>
 
               <svg
-                className="hidden h-6 w-6"
+                className="hidden w-6 h-6"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -72,21 +101,21 @@ export default function Navbar() {
               </svg>
             </button>
           </div>
-          <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-            <div className="flex-shrink-0 flex items-center">
+          <div className="flex items-center justify-center flex-1 sm:items-stretch sm:justify-start">
+            <div className="flex items-center flex-shrink-0">
               {/* logo - will need to change */}
               <img
-                className="block lg:hidden h-8 w-auto"
+                className="block w-auto h-8 lg:hidden"
                 src="https://cdn-icons-png.flaticon.com/512/135/135620.png"
                 alt="Workflow"
               />
               {/* logo with name - will need to change */}
               <img
-                className="hidden lg:block h-8 w-auto"
+                className="hidden w-auto h-8 lg:block"
                 src="https://cdn-icons-png.flaticon.com/512/135/135620.png"
                 alt="Workflow"
               />
-              <p className="hidden font-bold text-white lg:block px-2">
+              <p className="hidden px-2 font-bold text-white lg:block">
                 T-Shirts
               </p>
             </div>
@@ -95,7 +124,7 @@ export default function Navbar() {
                 {routes.map((route) => {
                   return (
                     <Link key={route.id} href={route.path}>
-                      <a className="text-white font-bold hover:bg-green-700 hover:text-white px-3 py-2 rounded-md text-sm">
+                      <a className="px-3 py-2 text-sm font-bold text-white rounded-md hover:bg-green-700 hover:text-white">
                         {route.name}
                       </a>
                     </Link>
@@ -109,14 +138,14 @@ export default function Navbar() {
             {/* THESE BUTTONS NEED TO BE INSIDE THE DROPDOWN MENU -- THIS BREAKS THE RESPONSIVENESS OF THE NAVBAR  */}
 
             {/* <div className="relative flex flex-col sm:flex-row sm:space-x-4">
-              <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+              <div className="flex-shrink-0 order-3 w-full mt-2 sm:order-2 sm:mt-0 sm:w-auto">
                 <Link href="/login">
                     <a className="flex items-center px-6 py-3 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 hover:text-gray-600">
                       Login
                     </a>
                 </Link>
               </div>
-              <div className="order-3 mt-2 flex-shrink-0 w-full sm:order-2 sm:mt-0 sm:w-auto">
+              <div className="flex-shrink-0 order-3 w-full mt-2 sm:order-2 sm:mt-0 sm:w-auto">
                 <Link href="/register">
                   <a className="flex items-center px-6 py-3 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 hover:text-gray-600">
                     Register
@@ -138,18 +167,18 @@ export default function Navbar() {
                       d="M24 3l-.743 2h-1.929l-3.474 12h-13.239l-4.615-11h16.812l-.564 2h-13.24l2.937 7h10.428l3.432-12h4.195zm-15.5 15c-.828 0-1.5.672-1.5 1.5 0 .829.672 1.5 1.5 1.5s1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5zm6.9-7-1.9 7c-.828 0-1.5.671-1.5 1.5s.672 1.5 1.5 1.5 1.5-.671 1.5-1.5c0-.828-.672-1.5-1.5-1.5z"
                     />
                   </svg>
-                  <span className="inline-flex justify-center items-center ml-2 w-6 h-6 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
+                  <span className="inline-flex items-center justify-center w-6 h-6 ml-2 text-xs font-semibold text-green-800 bg-green-100 rounded-full">
                     {cartItems.length}
                   </span>
                 </button>
               </Link>
             )}
 
-            <div className="ml-3 relative">
+            <div className="relative ml-3">
               <div>
                 <button
                   type="button"
-                  className="bg-green-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+                  className="flex text-sm bg-green-800 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
                   id="user-menu-button"
                   aria-expanded="false"
                   aria-haspopup="true"
@@ -159,11 +188,7 @@ export default function Navbar() {
                 >
                   <span className="sr-only">Open user menu</span>
                   {/* AVATAR*/}
-                  <img
-                    className="h-8 w-8 rounded-full"
-                    src="https://as2.ftcdn.net/v2/jpg/03/49/49/79/1000_F_349497933_Ly4im8BDmHLaLzgyKg2f2yZOvJjBtlw5.jpg"
-                    alt="avatar"
-                  />
+                  {renderAvatar()}
                 </button>
               </div>
 
@@ -236,7 +261,7 @@ export default function Navbar() {
             return (
               <Link key={route.id} href={route.path}>
                 <a
-                  className="text-white block px-3 py-2 hover:bg-green-700 rounded-md text-base font-medium"
+                  className="block px-3 py-2 text-base font-medium text-white rounded-md hover:bg-green-700"
                   aria-current="page"
                 >
                   {route.name}
